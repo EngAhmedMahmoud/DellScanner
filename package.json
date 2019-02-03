@@ -4,7 +4,8 @@
   "description": "This application for scanning dell devices using its ip:port based on tcp protocol to make a connection to get all configuration data saving it in db with CRUD application also get all alarms , saving these alarms and resetting it.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "author": "Ahmed Mahmoud",
   "license": "ISC",
@@ -14,5 +15,8 @@
     "express": "^4.16.4",
     "mongoose": "^5.4.9",
     "pug": "^2.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
   }
 }
