@@ -1,39 +1,4 @@
-*{
-    margin:0px;
-    padding:0px;
-}
-.header{
-    width:100%;
-    background-color:black;
-    color:white;
-    padding: 20px 0px;
-}
-.header a{
-    color:gray;
-    text-decoration: none;
-    font-size: 20px;
-    margin:10px;
-    text-shadow: 1px 1px white;
-    font-family: 'Times New Roman', Times, serif;
-}
-.header a:hover{
-    color:white;
-}
-.container{
-    height: 1500px;
-    margin-top:50px;
+.row{
+   margin:50px;
 }
 
-
-.footer{
-    position: fixed;
-    bottom: 0;
-    text-align: center;
-    width:100%;
-    background-color:black;
-    color:white;
-    padding:10px 0;
-    font-family: 'Times New Roman', Times, serif;
-    font-size:20px;
-    text-shadow: 1px 1px white;
-}
