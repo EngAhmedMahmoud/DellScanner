@@ -1,0 +1,18 @@
+{
+  "name": "iot-dell",
+  "version": "1.0.0",
+  "description": "This application for scanning dell devices using its ip:port based on tcp protocol to make a connection to get all configuration data saving it in db with CRUD application also get all alarms , saving these alarms and resetting it.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ahmed Mahmoud",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.9",
+    "pug": "^2.0.3"
+  }
+}
