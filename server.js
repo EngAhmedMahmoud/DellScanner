@@ -9,6 +9,12 @@ const URL = process.env.SERVER_URL;
 //create the app
 const app = express();
 
+//config view engine
+app.set("view egine", pug);
+
+//serve static files
+app.use(express.static("assets"));
+
 //configure app
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
