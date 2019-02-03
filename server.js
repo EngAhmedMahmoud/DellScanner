@@ -3,6 +3,7 @@ require("dotenv/config");
 require("./utils/db.con");
 const express = require("express");
 const bodyParser = require("body-parser");
+const DellRouter = require("./routes/dell.route");
 const PORT = process.env.SERVER_PORT || 3000;
 const URL = process.env.SERVER_URL;
 
@@ -10,7 +11,7 @@ const URL = process.env.SERVER_URL;
 const app = express();
 
 //config view engine
-app.set("view egine", pug);
+app.set("view engine", "pug");
 
 //serve static files
 app.use(express.static("assets"));
@@ -19,6 +20,8 @@ app.use(express.static("assets"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//dell router
+app.use('', DellRouter);
 //listen to server
 app.listen(PORT, () => {
     console.log(`Server is running at ${URL}:${PORT}`);

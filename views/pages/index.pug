@@ -1,0 +1,26 @@
+include ../partials/header
+.container
+        .dellForm
+            form(action="" method="post")
+                .div-25
+                    label.label IP Address
+                .div-75
+                    input.input(type="ip" required placeholder="Enter Ip Address")
+                .div-25
+                    label.label Port Number
+                .div-75
+                    input.input(type="number" required placeholder="Enter Port Number")
+                button#scan_button(type="submit") Scan
+        .manageTable
+            table
+                tr
+                    th Name
+                    th IP
+                    th Branch
+                    th Sensors
+                    th Location
+                    th Source
+                    th Group
+                
+
+include ../partials/footer

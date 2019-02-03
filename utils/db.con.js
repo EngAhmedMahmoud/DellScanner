@@ -11,4 +11,4 @@ mongoose.connect(DB_URL, { useNewUrlParser: true })
         console.log("=========== DB-Error ==========");
         console.log(error);
         console.log("===============================")
-    })
+    });
