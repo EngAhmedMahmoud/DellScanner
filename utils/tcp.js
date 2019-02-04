@@ -1,20 +1,32 @@
 "use strict";
+require("dotenv");
 const tcp = require("net");
-
+var socketData = [];
 exports.start = (ip, port) => {
+    const API_PATH = process.env.API_PATH;
+    const SCANNER_ACTION = process.env.SCANNER_ACTION;
+    const SCANNER_TOOL = process.env.SCANNER_TOOL;
+
+    //client to create connection between client and dell server
     let client = new tcp.Socket();
     client.connect(port, `${ip}`, () => {
         console.log('Connected');
-        let msg = { action: "config", tool: "scan" };
+        let msg = { action: `${SCANNER_ACTION}`, tool: `${SCANNER_TOOL}`, mode: API_PATH };
         client.write(JSON.stringify(msg));
+        client.end();
+    });
+    client.on('data', (data) => {
+        socketData.push(Buffer.from(data).toString());
+        console.log(Buffer.from(data).toString());
+    });
+    client.on('error', function (ex) {
+        socketData = [];
+    });
+    client.on("close", () => {
+        console.log("Bay");
+        socketData = [];
         client.destroy();
+
     });
 }
-/*
- client.on('data', function (data) {
-            console.log('Received: ' + data);
-        });
-        client.on('close', function () {
-            console.log('Connection closed');
-        });
-*/
+exports.data = socketData;

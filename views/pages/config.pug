@@ -1,0 +1,23 @@
+include ../partials/header
+
+.row
+        .col-md-6.dell_index
+            form(method="post" action="/scan")
+                .form-group
+                    label IP address
+                    input.form-control(type='ip', placeholder='Enter IP address',required name="ip" value=`${data.ip}`)
+                .form-group
+                    label Port number
+                    input.form-control(type='number', placeholder='Enter Port number',required name="port",value=`${port}`)
+                .form-group
+                    label Name
+                    input.form-control(type='text', placeholder='Enter Name',required name="name",value=`${data.name}`)
+                .form-group
+                    label Branch
+                    input.form-control(type='text', placeholder='Enter Branch Name',required name="branch")
+                .form-group
+                    label Sensors Number
+                    input.form-control(type='number', placeholder='Enter Branch Name',required name="sensors",value=`${data.sensors}`)
+                button.btn.btn-primary(type='submit') Save Configuration
+
+include ../partials/footer

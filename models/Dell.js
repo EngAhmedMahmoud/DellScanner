@@ -9,6 +9,12 @@ const Device = new schema({
         required: true,
         dropDups: true
     },
+    port: {
+        type: Number,
+        unique: true,
+        required: true,
+        dropDups: true
+    },
     name: {
         type: String,
         unique: true,

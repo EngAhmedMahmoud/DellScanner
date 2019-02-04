@@ -14,5 +14,7 @@ exports.scan = (req, res, next) => {
     let ip = req.body.ip;
     let port = req.body.port;
     tcp.start(ip, port);
-    res.json({ connect: true });
+    data = JSON.parse(tcp.data);
+    console.log(data.length);
+    res.render(__dirname + '/../views/pages/config', { data: data, port: port });
 }
