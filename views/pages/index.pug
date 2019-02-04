@@ -1,46 +1,35 @@
 include ../partials/header
 .row
         .col-md-6.dell_index
-            form
+            form(method="post" action="/scan")
                 .form-group
                     label IP address
-                    input.form-control(type='ip', placeholder='Enter IP address',required)
+                    input.form-control(type='ip', placeholder='Enter IP address',required name="ip")
                 .form-group
                     label Port number
-                    input.form-control(type='password', placeholder='Enter Port number',required)
+                    input.form-control(type='number', placeholder='Enter Port number',required name="port")
                 button.btn.btn-primary(type='submit') Scan
-.row
-        .col-md-6(style="overflow-x: auto")
-            table.table(style="overflow: scroll;")
-                thead.thead-dark
-                    tr
-                        th(scope='col') Name
-                        th(scope='col') View
-                        th(scope='col') Edit
-                        th(scope='col') Delete
-                    tr
-                        td Otto
-                        td 
-                            i.fa.fa-eye 
-                        td
-                            i.fa.fa-edit
-                        td
-                            i.fa.fa-trash
-                    tr
-                        td Thornton
-                        td 
-                            i.fa.fa-eye 
-                        td
-                            i.fa.fa-edit 
-                        td
-                            i.fa.fa-trash
-                    tr
-                        td the Bird
-                        td 
-                            i.fa.fa-eye 
-                        td
-                            i.fa.fa-edit 
-                        td
-                            i.fa.fa-trash
+if(devices.length > 0)
+    .row
+            .col-md-6(style="overflow-x: auto")
+                table.table(style="overflow: scroll;")
+                    thead.thead-dark
+                        tr
+                            th(scope='col') IP Address
+                            th(scope='col') View
+                            th(scope='col') Edit
+                            th(scope='col') Delete
+                        each device in devices
+                            tr
+                                td #{device.ip}
+                                td 
+                                    button(href='/view') 
+                                        i.fa.fa-eye 
+                                td
+                                    button(href="/edit")
+                                        i.fa.fa-edit
+                                td
+                                    button(href="/delete")
+                                        i.fa.fa-trash
 
 include ../partials/footer

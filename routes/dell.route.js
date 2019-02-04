@@ -1,9 +1,9 @@
 "use strict";
 const router = require("express").Router();
+const DellController = require('./../controllers/DellCtrl');
 
 //main page
-router.get('', (req, res, next) => {
-    res.render(__dirname + "/../views/pages/index");
-});
+router.get('', DellController.devices);
+router.post('/scan', DellController.scan);
 
 module.exports = router;

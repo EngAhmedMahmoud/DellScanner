@@ -5,10 +5,15 @@ const schema = mongoose.Schema;
 const Device = new schema({
     ip: {
         type: String,
-        required: true
+        unique: true,
+        required: true,
+        dropDups: true
     },
     name: {
-        type: String
+        type: String,
+        unique: true,
+        required: true,
+        dropDups: true
     },
     branch: {
         type: String
