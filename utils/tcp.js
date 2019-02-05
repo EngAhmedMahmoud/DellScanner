@@ -2,6 +2,7 @@
 require("dotenv");
 const tcp = require("net");
 var socketData = [];
+var notFound = false;
 exports.start = (ip, port) => {
     const API_PATH = process.env.API_PATH;
     const SCANNER_ACTION = process.env.SCANNER_ACTION;
@@ -21,6 +22,9 @@ exports.start = (ip, port) => {
     });
     client.on('error', function (ex) {
         socketData = [];
+        if (ex) {
+            notFound = true;
+        }
     });
     client.on("close", () => {
         console.log("Bay");
@@ -30,3 +34,4 @@ exports.start = (ip, port) => {
     });
 }
 exports.data = socketData;
+exports.notFound = notFound;

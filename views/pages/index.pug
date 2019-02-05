@@ -23,13 +23,13 @@ if(devices.length > 0)
                             tr
                                 td #{device.ip}
                                 td 
-                                    button(href='/view') 
-                                        i.fa.fa-eye 
+                                    button.btn.btn-default(href='/view') 
+                                        i.fa.fa-eye(style="color:#007bff")
                                 td
-                                    button(href="/edit")
-                                        i.fa.fa-edit
+                                    button.btn.btn-default(href="/edit")
+                                        i.fa.fa-edit(style="color:green")
                                 td
-                                    button(href="/delete")
-                                        i.fa.fa-trash
+                                    button.btn.btn-default(href="/delete")
+                                        i.fa.fa-trash(style="color:red;")
 
 include ../partials/footer
