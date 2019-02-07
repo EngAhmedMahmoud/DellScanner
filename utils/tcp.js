@@ -13,6 +13,7 @@ exports.startScan = (ip, port) => {
         const SCANNER_TOOL = dell_config_data.SCANNER_TOOL;
         //client to create connection between client and dell server
         let client = new tcp.Socket();
+        client.setTimeout(1000);
         client.connect(port, `${ip}`, () => {
             console.log('Connected');
             let msg = { action: `${SCANNER_ACTION}`, tool: `${SCANNER_TOOL}`, mode: API_PATH };
@@ -31,6 +32,10 @@ exports.startScan = (ip, port) => {
             socketData = [];
             client.destroy();
         });
+        client.on('timeout', function () {
+            console.log('Client request time out. ');
+            reject("ex");
+        })
 
     })
 }

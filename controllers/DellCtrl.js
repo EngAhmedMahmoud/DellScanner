@@ -131,5 +131,6 @@ exports.edit = (req, res, next) => {
         res.render(__dirname + '/../views/pages/edit', { data: data });
     }).catch((err) => {
         res.redirect('/');
-    })
+    });
 }
+//save edit
