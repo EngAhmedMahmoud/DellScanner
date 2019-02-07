@@ -2,22 +2,29 @@ include ../partials/header
 
 .row
         .col-md-6.dell_index
-            form(method="post" action="/scan")
+            form(method="post" action="/save_config")
                 .form-group
                     label IP address
-                    input.form-control(type='ip', placeholder='Enter IP address',required name="ip" value=`${data.ip}`)
+                    input.form-control(type='ip', placeholder='Enter IP address',required name="ip" value=`${(data[0].ip)?data[0].ip:data.ip}`)
                 .form-group
                     label Port number
-                    input.form-control(type='number', placeholder='Enter Port number',required name="port",value=`${port}`)
+                    input.form-control(type='number', placeholder='Enter Port number',required name="port",value=`${(port)?port:data.port}`)
                 .form-group
                     label Name
-                    input.form-control(type='text', placeholder='Enter Name',required name="name",value=`${data.name}`)
+                    input.form-control(type='text', placeholder='Enter Name',required name="name",value=`${(data[0].name)?data[0].name:data.name}`)
                 .form-group
                     label Branch
-                    input.form-control(type='text', placeholder='Enter Branch Name',required name="branch")
+                    input.form-control(type='text', placeholder='Enter Branch Name',required name="branch",value=`${(data[0].branch)?data[0].branch:data.branch}`)
                 .form-group
                     label Sensors Number
-                    input.form-control(type='number', placeholder='Enter Branch Name',required name="sensors",value=`${data.sensors}`)
+                    input.form-control(type='number', placeholder='Enter Branch Name',required name="sensors",value=`${(data[0].sensors)?data[0].sensors:data.sensors}`)
+                .form-group
+                    label Sensors Number
+                    input.form-control(type='number', placeholder='Enter Latitude',required name="lat",step="0.000000000000001",value=`${data.lat}`)
+                .form-group
+                    label Sensors Number
+                    input.form-control(type='number', placeholder='Enter Longitude',required name="lng" ,step="0.000000000000001",value=`${data.lat}`)
+                
                 button.btn.btn-primary(type='submit') Save Configuration
 
 include ../partials/footer

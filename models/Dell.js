@@ -27,7 +27,10 @@ const Device = new schema({
     sensors: {
         type: Number
     },
-    location: {
+    lat: {
+        type: String
+    },
+    lng: {
         type: String
     },
     source: {

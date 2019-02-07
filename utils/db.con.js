@@ -1,7 +1,10 @@
 "use strict";
-require("dotenv/config");
 const mongoose = require("mongoose");
-const DB_URL = process.env.DB_URL;
+const fs = require("fs");
+const db_config_file = fs.readFileSync("./config/db.config.json");
+const db_config_data = JSON.parse(db_config_file);
+
+const DB_URL = db_config_data.DB_URL;
 //create connection
 mongoose.connect(DB_URL, { useNewUrlParser: true, useCreateIndex: true, })
     .then(() => {

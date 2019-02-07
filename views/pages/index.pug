@@ -1,15 +1,21 @@
 include ../partials/header
 .row
         .col-md-6.dell_index
+            #{error}
+            if(error)
+                each err in error
+                    .alert.alert-danger #{err} 
+            if(save_device)
+                .alert.alert-success #{save_device}
             form(method="post" action="/scan")
                 .form-group
                     label IP address
-                    input.form-control(type='ip', placeholder='Enter IP address',required name="ip")
+                    input.form-control(type='ip', placeholder='Enter IP address',required name="ip" value=`${(ip)?ip:''}`)
                 .form-group
                     label Port number
-                    input.form-control(type='number', placeholder='Enter Port number',required name="port")
+                    input.form-control(type='number', placeholder='Enter Port number',required name="port"  value=`${(port)?port:''}`)
                 button.btn.btn-primary(type='submit') Scan
-if(devices.length > 0)
+if(devices && devices.length > 0)
     .row
             .col-md-6(style="overflow-x: auto")
                 table.table(style="overflow: scroll;")
