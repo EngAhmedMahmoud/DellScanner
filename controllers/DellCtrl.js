@@ -122,5 +122,14 @@ exports.delete = (req, res, next) => {
         })
         .catch(async (error) => {
             res.redirect("/");
-        })
+        });
+}
+//edit device
+exports.edit = (req, res, next) => {
+    let device = req.params.id;
+    Device.findById(device).then((data) => {
+        res.render(__dirname + '/../views/pages/edit', { data: data });
+    }).catch((err) => {
+        res.redirect('/');
+    })
 }
