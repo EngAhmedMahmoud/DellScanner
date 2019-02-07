@@ -97,7 +97,7 @@ exports.save_config = (req, res, next) => {
         });
         savedDevice.save()
             .then((data) => {
-                let save_device = "Added Successfully";
+                req.flash("save_device", "Device Added Successfully");
                 res.redirect('/');
             })
             .catch((err) => {
@@ -112,4 +112,15 @@ exports.save_config = (req, res, next) => {
 
 
 
+}
+//delete device 
+exports.delete = (req, res, next) => {
+    let device = req.params.id;
+    Device.findByIdAndDelete(device)
+        .then((deleted) => {
+            res.redirect("/");
+        })
+        .catch(async (error) => {
+            res.redirect("/");
+        })
 }

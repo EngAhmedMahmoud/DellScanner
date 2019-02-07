@@ -27,21 +27,21 @@ app.use(bodyParser.json());
 app.use('', DellRouter);
 
 //handle 404 error
-// app.use((req, res, next) => {
-//     let error = new Error;
-//     if (error) {
-//         error.code = 404;
-//         error.msg = "Not Found";
-//         return next(error);
-//     }
-// });
-// app.use((error, req, res, next) => {
-//     if (error) {
-//         res.render('partials/404');
-//     } else {
-//         next();
-//     }
-//});
+app.use((req, res, next) => {
+    let error = new Error;
+    if (error) {
+        error.code = 404;
+        error.msg = "Not Found";
+        return next(error);
+    }
+});
+app.use((error, req, res, next) => {
+    if (error) {
+        res.render('partials/404');
+    } else {
+        next();
+    }
+});
 
 //listen to server
 app.listen(PORT, () => {

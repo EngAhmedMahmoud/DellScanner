@@ -5,8 +5,7 @@ include ../partials/header
             if(error)
                 each err in error
                     .alert.alert-danger #{err} 
-            if(save_device)
-                .alert.alert-success #{save_device}
+           
             form(method="post" action="/scan")
                 .form-group
                     label IP address
@@ -29,13 +28,30 @@ if(devices && devices.length > 0)
                             tr
                                 td #{device.ip}
                                 td 
-                                    button.btn.btn-default(href='/view') 
+                                    button.btn.btn-default(onclick=`device('${JSON.stringify(device)}')`) 
                                         i.fa.fa-eye(style="color:#007bff")
                                 td
-                                    button.btn.btn-default(href="/edit")
+                                    a.btn.btn-default(href=`/edit/${device._id}`)
                                         i.fa.fa-edit(style="color:green")
                                 td
-                                    button.btn.btn-default(href="/delete")
+                                    a.btn.btn-default(href=`/delete/${device._id}`)
                                         i.fa.fa-trash(style="color:red;")
+
+
+.modal#Details_modal(tabindex='-1', role='dialog')
+    .modal-dialog(role='document')
+        .modal-content
+            .modal-header
+                h5.modal-title
+                button.closemodal(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') ×
+            .modal-body
+                table.table
+                    thead#device_details
+                        
+                        
+            .modal-footer
+                button.btn.btn-secondary.closemodal(type='button', data-dismiss='modal') Close
+
 
 include ../partials/footer

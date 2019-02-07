@@ -19,11 +19,17 @@ include ../partials/header
                     label Sensors Number
                     input.form-control(type='number', placeholder='Enter Branch Name',required name="sensors",value=`${(data[0].sensors)?data[0].sensors:data.sensors}`)
                 .form-group
-                    label Sensors Number
+                    label Latitude
                     input.form-control(type='number', placeholder='Enter Latitude',required name="lat",step="0.000000000000001",value=`${data.lat}`)
                 .form-group
-                    label Sensors Number
+                    label  Longitude
                     input.form-control(type='number', placeholder='Enter Longitude',required name="lng" ,step="0.000000000000001",value=`${data.lat}`)
+                .form-group
+                    label  Source
+                    input.form-control(type='text', placeholder='Enter source',required name="source")
+                .form-group
+                    label  Group
+                    input.form-control(type='text', placeholder='Enter group',required name="group")
                 
                 button.btn.btn-primary(type='submit') Save Configuration
 
