@@ -133,4 +133,42 @@ exports.edit = (req, res, next) => {
         res.redirect('/');
     });
 }
+//update device
+exports.update = async (req, res, next) => {
+    let updatedDevice = {
+        ip: req.body.ip,
+        port: req.body.port,
+        name: req.body.name,
+        branch: req.body.branch,
+        sensors: req.body.sensors,
+        lat: req.body.lat,
+        lng: req.body.lng,
+        source: req.body.source,
+        group: req.body.group,
+    }
+    let devices = await Device.find();
+
+    let msg = [];
+    //check if this ip exists in data
+    let device = await Device.find({ ip: updatedDevice.ip });
+    tcp.startScan(updatedDevice.ip, updatedDevice.port).then((data) => {
+        Device.findOneAndUpdate({ ip: updatedDevice.ip }, { $set: updatedDevice })
+            .then((data) => {
+                res.redirect("/");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+    }).catch((err) => {
+
+        let error = ["Device Not Exist"];
+        if (err) {
+            res.render(__dirname + '/../views/pages/index', { error: error, devices });
+        }
+
+
+    });
+
+}
 //save edit
