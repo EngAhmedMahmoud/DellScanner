@@ -2,21 +2,15 @@
 const tcp = require("net");
 var socketData = [];
 var notFound = false;
-const fs = require("fs");
-const dell_config_file = fs.readFileSync(__dirname + "/../config/dell.config.json");
-const dell_config_data = JSON.parse(dell_config_file);
 
-exports.startScan = (ip, port) => {
+
+exports.startScan = (ip, port, msg) => {
     return new Promise((resolve, reject) => {
-        const API_PATH = dell_config_data.API_PATH;
-        const SCANNER_ACTION = dell_config_data.SCANNER_ACTION;
-        const SCANNER_TOOL = dell_config_data.SCANNER_TOOL;
         //client to create connection between client and dell server
         let client = new tcp.Socket();
         client.setTimeout(1000);
         client.connect(port, `${ip}`, () => {
             console.log('Connected');
-            let msg = { action: `${SCANNER_ACTION}`, tool: `${SCANNER_TOOL}`, mode: API_PATH };
             client.write(JSON.stringify(msg));
             client.end();
         });

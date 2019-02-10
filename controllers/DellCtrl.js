@@ -2,6 +2,12 @@
 const Device = require("./../models/Dell");
 const tcp = require("./../utils/tcp");
 const net = require("net");
+const fs = require("fs");
+const dell_config_file = fs.readFileSync(__dirname + "/../config/dell.config.json");
+const dell_config_data = JSON.parse(dell_config_file);
+const API_PATH = dell_config_data.API_PATH;
+const SCANNER_ACTION = dell_config_data.SCANNER_ACTION;
+const SCANNER_TOOL = dell_config_data.SCANNER_TOOL;
 
 //all devices 
 exports.devices = async (req, res, next) => {
@@ -10,6 +16,7 @@ exports.devices = async (req, res, next) => {
 }
 //scan device
 exports.scan = async (req, res, next) => {
+    let msg = { action: `${SCANNER_ACTION}`, tool: `${SCANNER_TOOL}`, mode: API_PATH };
 
     let ip = req.body.ip;
     let port = req.body.port;
@@ -23,7 +30,7 @@ exports.scan = async (req, res, next) => {
     //check if this ip exists in data
     let device = await Device.find({ ip: ip });
     let devices = await Device.find();
-    tcp.startScan(ip, port).then((data) => {
+    tcp.startScan(ip, port, msg).then((data) => {
         if (device.length != 0) {
             error.push("This IP Reserved");
             res.render(__dirname + '/../views/pages/index', { error: error, port: port, ip: ip, devices })
@@ -79,9 +86,7 @@ exports.save_config = (req, res, next) => {
         error.push("Enter Valid IP");
     }
     if (error.length != 0) {
-
         res.render(__dirname + '/../views/pages/config', { error: error, data: req.body });
-
     } else {
         //save device in database
         let savedDevice = new Device({
@@ -97,12 +102,17 @@ exports.save_config = (req, res, next) => {
         });
         savedDevice.save()
             .then((data) => {
-                req.flash("save_device", "Device Added Successfully");
-                res.redirect('/');
+                let msg = {
+                    action: `${SCANNER_ACTION}`, tool: `ayhaga`, source: source,
+                    group: group, location: lat + "," + lng
+                };
+                tcp.startScan(ip, port, msg).then((data) => {
+                    res.redirect('/');
+                });
             })
             .catch((err) => {
+                console.log(err);
                 if (err) {
-                    res.locals.save_error = error;
                     res.redirect('/');
                 }
             });
@@ -147,14 +157,16 @@ exports.update = async (req, res, next) => {
         group: req.body.group,
     }
     let devices = await Device.find();
-
-    let msg = [];
+    let msg = {
+        action: `${SCANNER_ACTION}`, tool: `ayhaga`, source: updatedDevice.source,
+        group: updatedDevice.group, location: updatedDevice.lat + "," + updatedDevice.lng
+    };
     //check if this ip exists in data
     let device = await Device.find({ ip: updatedDevice.ip });
-    tcp.startScan(updatedDevice.ip, updatedDevice.port).then((data) => {
+    tcp.startScan(updatedDevice.ip, updatedDevice.port, msg).then((data) => {
         Device.findOneAndUpdate({ ip: updatedDevice.ip }, { $set: updatedDevice })
             .then((data) => {
-                res.redirect("/");
+                res.redirect('/');
             })
             .catch((error) => {
                 console.log(error);
@@ -166,9 +178,6 @@ exports.update = async (req, res, next) => {
         if (err) {
             res.render(__dirname + '/../views/pages/index', { error: error, devices });
         }
-
-
     });
-
 }
 //save edit
