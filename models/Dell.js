@@ -46,6 +46,9 @@ const Device = new schema({
     updated_at: {
         type: Date,
         default: Date.now
+    },
+    status: {
+        type: Number
     }
 });
 module.exports = mongoose.model('Device', Device, 'devices');
