@@ -194,12 +194,32 @@ exports.dell_alarm = (req, res, next) => {
             is_alarm: is_alarm,
         }).then((alarm) => {
             if (alarm && alarm.length != 0) {
-                Alarm.findByIdAndUpdate(alarm._id, { $set: { created_at: Date.now(), updated_at: Date.now() } })
+
+                Alarm.findByIdAndUpdate(alarm[0]._id, { created_at: Date.now(), updated_at: Date.now() }, { new: true })
                     .then((updated) => {
                         res.status(200).json(updated);
                     }).catch((err) => {
                         res.status(500).json(err);
                     })
+            } else {
+                //saving alarm in db
+                let newAlarm = new Alarm({
+                    ip: ip,
+                    is_alarm: is_alarm,
+                    alarm_msg: alarmMsg,
+                    type: type
+                });
+                newAlarm.save()
+                    .then((alarm) => {
+                        res.status(200).json({
+                            alarm
+                        });
+                    })
+                    .catch((error) => {
+                        res.status(500).json({
+                            error
+                        });
+                    });
             }
         }).catch((error) => {
             res.status(500).json(error);
