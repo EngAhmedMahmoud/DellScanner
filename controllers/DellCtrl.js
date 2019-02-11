@@ -1,5 +1,6 @@
 "use strict";
 const Device = require("./../models/Dell");
+const Alarm = require("./../models/Alarm");
 const tcp = require("./../utils/tcp");
 const net = require("net");
 const fs = require("fs");
@@ -182,5 +183,45 @@ exports.update = async (req, res, next) => {
 }
 //get alarms
 exports.dell_alarm = (req, res, next) => {
-
+    let ip = req.body.ip;
+    let is_alarm = req.body.isAlarm;
+    let alarmMsg = req.body.alarmMsg;
+    let type = req.body.type;
+    if (is_alarm == "false") {
+        //check if fake alarms exists or not 
+        Alarm.find({
+            ip: ip,
+            is_alarm: is_alarm,
+        }).then((alarm) => {
+            if (alarm && alarm.length != 0) {
+                Alarm.findByIdAndUpdate(alarm._id, { $set: { created_at: Date.now(), updated_at: Date.now() } })
+                    .then((updated) => {
+                        res.status(200).json(updated);
+                    }).catch((err) => {
+                        res.status(500).json(err);
+                    })
+            }
+        }).catch((error) => {
+            res.status(500).json(error);
+        })
+    } else {
+        //saving it as areal alarm
+        let newAlarm = new Alarm({
+            ip: ip,
+            is_alarm: is_alarm,
+            alarm_msg: alarmMsg,
+            type: type
+        });
+        newAlarm.save()
+            .then((alarm) => {
+                res.status(200).json({
+                    alarm
+                });
+            })
+            .catch((error) => {
+                res.status(500).json({
+                    error
+                });
+            });
+    }
 }
