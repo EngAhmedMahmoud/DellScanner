@@ -180,4 +180,7 @@ exports.update = async (req, res, next) => {
         }
     });
 }
-//save edit
+//get alarms
+exports.dell_alarm = (req, res, next) => {
+
+}
