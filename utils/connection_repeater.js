@@ -6,6 +6,7 @@ function RepeaterCheck() {
     Alarm.find().then((devices) => {
         for (let index = 0; index < devices.length; index++) {
             console.log(devices[index].created_at);
+
         }
     }).catch(error => { console.log(error) });
 
