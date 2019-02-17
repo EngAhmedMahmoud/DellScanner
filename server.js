@@ -1,6 +1,11 @@
 "use strict";
 require("./utils/db.con");
 const express = require("express");
+//create the app
+const app = express();
+const http = require("http").Server(app);
+const io = require("socket.io")(http);
+
 const bodyParser = require("body-parser");
 const DellRouter = require("./routes/dell.route");
 const fs = require("fs");
@@ -13,8 +18,7 @@ const URL = server_config_data.SERVER_URL;
 
 //init connection repeater
 connectionRepeater.init;
-//create the app
-const app = express();
+
 
 //config view engine
 app.set("view engine", "pug");
@@ -47,6 +51,6 @@ app.use((error, req, res, next) => {
 });
 
 //listen to server
-app.listen(PORT, () => {
+http.listen(PORT, () => {
     console.log(`Server is running at ${URL}:${PORT}`);
 });
