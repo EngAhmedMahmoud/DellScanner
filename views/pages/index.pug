@@ -1,6 +1,6 @@
 include ../partials/header
 .row
-        .col-md-6.dell_index
+        .col-md-6
             #{error}
             if(error)
                 each err in error
@@ -8,12 +8,28 @@ include ../partials/header
            
             form(method="post" action="/scan")
                 .form-group
-                    label IP address
-                    input.form-control(type='ip', placeholder='Enter IP address',required name="ip" value=`${(ip)?ip:''}`)
+                    label IP address (From)
+                    input.form-control(type='ip', placeholder='Enter IP From  address',required name="FromIP" value=`${(FromIP)?FromIP:''}`)
+                .form-group
+                    label IP address (To)
+                    input.form-control(type='ip', placeholder='Enter IP To address',required name="ToIP" value=`${(ToIP)?ToIP:''}`)
                 .form-group
                     label Port number
                     input.form-control(type='number', placeholder='Enter Port number',required name="port"  value=`${(port)?port:''}`)
                 button.btn.btn-primary(type='submit') Scan
+       
+        .col-md-6(style="overflow-x: auto;margin-top:10px;")
+            table.table(style="overflow: scroll;")
+                thead.thead-dark
+                    tr
+                        th(scope='col') IP Address
+                        th(scope='col') Configure
+                    tr
+                        td data and information
+                        td 
+                            button.btn.btn-default 
+                                i.fa.fa-cog.fa-lg(style="color:black")
+
 if(devices && devices.length > 0)
     .row
             .col-md-6(style="overflow-x: auto")

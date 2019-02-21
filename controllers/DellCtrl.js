@@ -18,16 +18,29 @@ exports.devices = async (req, res, next) => {
 //scan device
 exports.scan = async (req, res, next) => {
     let msg = { action: `${SCANNER_ACTION}`, tool: `${SCANNER_TOOL}`, mode: API_PATH };
-
-    let ip = req.body.ip;
+    let FromIP = req.body.FromIP;
+    let ToIP = req.body.ToIP;
     let port = req.body.port;
     let error = [];
-    if (ip == undefined || ip == '') {
-        error.push("Enter IP Address");
+    if (FromIP == undefined || FromIP == '') {
+        error.push("Enter From IP Address");
+    }
+    if (ToIP == undefined || ToIP == '') {
+        error.push("Enter From To IP Address");
     }
     if (port == undefined || port == '') {
         error.push("Enter Port Address");
     }
+    //check ip vlidation 
+    let ipValidation = compareIp(FromIP, ToIP);
+    if (ipValidation == true) {
+        //start scanning process
+        return res.json(ipValidation);
+    } else {
+        //return error
+        return res.json(ipValidation);
+    }
+
     //check if this ip exists in data
     let device = await Device.find({ ip: ip });
     let devices = await Device.find();
@@ -117,12 +130,7 @@ exports.save_config = (req, res, next) => {
                     res.redirect('/');
                 }
             });
-
     }
-
-
-
-
 }
 //delete device 
 exports.delete = (req, res, next) => {
@@ -244,4 +252,56 @@ exports.dell_alarm = (req, res, next) => {
                 });
             });
     }
+}
+//compare two ips 
+function compareIp(FromIP, ToIP) {
+
+    let errors = [];
+    let ipFromSplited = FromIP.split(".");
+    let ipToSplited = ToIP.split(".");
+    //compare length 
+    let ip_length_compare = ipLength(ipFromSplited, ipToSplited);
+    if (ip_length_compare == false) {
+        errors.push("IP Length Not Correct");
+    }
+    //compare first part equality
+    let ip_three_parts_compare = ThreePartCompare(ipFromSplited, ipToSplited);
+    if (ip_three_parts_compare == false) {
+        errors.push("The Range Not valid");
+    }
+    if (errors.length != 0) {
+        return errors;
+    } else {
+        return true;
+    }
+
+
+}
+function ipLength(from_ip, to_ip) {
+    if (from_ip.length != 4 || to.length != 4) {
+        return false;
+    }
+}
+function ThreePartCompare(ipFrom, ipTo) {
+    //ip from parts
+    let firstFromPart = ipFromSplited[0];
+    let secondFromPart = ipFromSplited[1];
+    let thirdFromPart = ipFromSplited[2];
+    let forthFromPart = ipFromSplited[3];
+    //ip to parts
+    let firstToPart = ipToSplited[0];
+    let secondToPart = ipToSplited[1];
+    let thirdToPart = ipToSplited[2];
+    let forthToPart = ipToSplited[3];
+
+    if ((firstFromPart == firstToPart) && (secondFromPart == secondToPart) && (thirdFromPart == thirdToPart)) {
+        if (firstFromPart <= 255 && secondFromPart <= 255 && thirdFromPart <= 255 && forthFromPart <= 255 && forthToPart <= 255) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+
 }
